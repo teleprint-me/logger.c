@@ -19,7 +19,7 @@ const char* LOG_TYPE_NAME[] = {"unknown", "stream", "file"};
  *
  * @return True if the type and name were set successfully, false otherwise.
  */
-bool set_logger_type_and_name(struct Logger* logger, log_type_t log_type) {
+bool set_logger_type_and_name(logger_t* logger, log_type_t log_type) {
     // Set logger type based on provided logger type
     switch (log_type) {
         case LOG_TYPE_UNKNOWN:
@@ -54,9 +54,7 @@ bool set_logger_type_and_name(struct Logger* logger, log_type_t log_type) {
  *
  * @return True if the file path was set successfully, false otherwise.
  */
-bool set_logger_file_path_and_stream(
-    struct Logger* logger, const char* file_path
-) {
+bool set_logger_file_path_and_stream(logger_t* logger, const char* file_path) {
     if (file_path == NULL) {
         // set the logger type to stream upon failure.
         set_logger_type_and_name(logger, LOG_TYPE_STREAM);
@@ -88,9 +86,9 @@ bool set_logger_file_path_and_stream(
  * @return A pointer to the newly created logger instance, or NULL if memory
  * allocation fails or if the logger type is invalid.
  */
-struct Logger* logger_new(log_type_t log_type) {
+logger_t* logger_new(log_type_t log_type) {
     // Allocate memory for the logger instance
-    struct Logger* logger = (struct Logger*) malloc(sizeof(struct Logger));
+    logger_t* logger = (logger_t*) malloc(sizeof(logger_t));
 
     // Check if memory allocation was successful
     if (NULL == logger) {
@@ -143,11 +141,11 @@ struct Logger* logger_new(log_type_t log_type) {
  * @return A pointer to the newly created logger instance, or NULL if memory
  * allocation fails or if the specified log file cannot be opened.
  */
-struct Logger* logger_create(
+logger_t* logger_create(
     log_level_t log_level, log_type_t log_type, const char* file_path
 ) {
     // Create a new logger instance
-    struct Logger* logger = logger_new(log_type);
+    logger_t* logger = logger_new(log_type);
     if (logger == NULL) {
         return NULL;
     }
@@ -189,7 +187,7 @@ struct Logger* logger_create(
  * @param logger A pointer to the logger instance to be destroyed.
  * @return True if the logger was successfully destroyed, false otherwise.
  */
-bool logger_free(struct Logger* logger) {
+bool logger_free(logger_t* logger) {
     if (NULL == logger) {
         return false;
     }
@@ -233,7 +231,7 @@ bool logger_free(struct Logger* logger) {
  * @return true if the message was successfully logged, false otherwise.
  */
 bool logger_message(
-    struct Logger* logger, log_level_t log_level, const char* format, ...
+    logger_t* logger, log_level_t log_level, const char* format, ...
 ) {
     // block if and only if the log_level is less than the logger->log_level
     if (log_level < logger->log_level) {
@@ -315,7 +313,7 @@ bool logger_message(
  * @warning Modifying the global logger object or attempting to reinitialize
  * the mutex after initialization can lead to undefined behavior.
  */
-struct Logger global_logger = {
+logger_t global_logger = {
     LOG_LEVEL_DEBUG,          /**< Logging level */
     LOG_TYPE_STREAM,          /**< Logger type */
     "stream",                 /**< Logger type name */
