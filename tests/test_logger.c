@@ -1,7 +1,7 @@
 /*
- * alt.cpp/tests/test_logger.c
- *
  * Copyright © 2024 Austin Berrio
+ *
+ * tests/test_logger.c
  *
  * Build:
  *   gcc -o test_logger source/logger.c tests/test_logger.c -lpthread
@@ -20,7 +20,7 @@
  *   [DEBUG] Logging to a file: 1, 2, 3... Done!
  */
 
-#include "../include/logger.h"
+#include "logger.h"
 
 #include <stdio.h>
 
