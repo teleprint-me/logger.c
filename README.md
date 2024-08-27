@@ -72,7 +72,8 @@ The logger can output logs in two different ways:
 
 ### Logger Structure
 
-The core of the logging system is the `Logger` structure:
+The `Logger` structure is the core of the logging system, encapsulating all the
+necessary information for logging operations:
 
 ```c
 typedef struct Logger {
@@ -85,14 +86,24 @@ typedef struct Logger {
 } logger_t;
 ```
 
-member variables:
+#### Member Variables:
 
-- **`log_level`**: The logging level of the logger.
-- **`log_type`**: The type of logger (stream or file).
-- **`log_type_name`**: The name associated with the logger type.
-- **`file_stream`**: The file stream for writing log messages.
-- **`file_path`**: The path to the log file.
-- **`thread_lock`**: Mutex to ensure thread-safe logging.
+- **`log_level`**: Specifies the minimum severity level of messages that will
+  be logged. Messages below this level are ignored.
+- **`log_type`**: Defines the output destination for log messages. Options
+  include:
+  - `LOG_TYPE_STREAM`: Logs are sent to a stream such as `stdout` or `stderr`.
+  - `LOG_TYPE_FILE`: Logs are written to a file specified by `file_path`.
+- **`log_type_name`**: A descriptive name for the logger's output type, aiding
+  in debugging and configuration management.
+- **`file_stream`**: A pointer to the `FILE` object where log messages will be
+  written. This could be a standard stream (`stdout`, `stderr`) or a file
+  opened for writing.
+- **`file_path`**: The path to the log file, if `LOG_TYPE_FILE` is selected. If
+  logging to a stream, this can be `NULL`.
+- **`thread_lock`**: A mutex that ensures that logging operations are
+  thread-safe, preventing data races when multiple threads attempt to log
+  messages simultaneously.
 
 ### Functions
 
