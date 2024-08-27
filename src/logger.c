@@ -189,7 +189,7 @@ struct Logger* logger_create(
  * @param logger A pointer to the logger instance to be destroyed.
  * @return True if the logger was successfully destroyed, false otherwise.
  */
-bool logger_destroy(struct Logger* logger) {
+bool logger_free(struct Logger* logger) {
     if (NULL == logger) {
         return false;
     }

@@ -40,7 +40,7 @@ void test_lazy_initialization_and_logging() {
         = logger_create(LOG_LEVEL_DEBUG, LOG_TYPE_UNKNOWN, NULL);
     LOG(lazy_logger, LOG_LEVEL_DEBUG, "Lazy logger debug\n");
     LOG(lazy_logger, LOG_LEVEL_ERROR, "Lazy logger error\n");
-    logger_destroy(lazy_logger);
+    logger_free(lazy_logger);
 }
 
 // Test logging at different levels
@@ -50,7 +50,7 @@ void test_logging_at_different_levels() {
     LOG(level_logger, LOG_LEVEL_DEBUG, "Should not log debug\n");
     LOG(level_logger, LOG_LEVEL_INFO, "Should log info\n");
     LOG(level_logger, LOG_LEVEL_ERROR, "Should log error\n");
-    logger_destroy(level_logger);
+    logger_free(level_logger);
 }
 
 // Test logging to a file
@@ -64,7 +64,7 @@ void test_logging_to_file() {
         3);
 
     // Clean up
-    logger_destroy(file_logger);
+    logger_free(file_logger);
 }
 
 int main(void) {
