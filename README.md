@@ -75,21 +75,24 @@ The logger can output logs in two different ways:
 The core of the logging system is the `Logger` structure:
 
 ```c
-logger_t {
-    /**< The logging level of the logger. */
+typedef struct Logger {
     log_level_t log_level;
-    /**< The type of logger (stream or file). */
     log_type_t  log_type;
-    /**< The name associated with the logger type. */
     const char* log_type_name;
-    /**< The file stream for writing log messages. */
     FILE* file_stream;
-    /**< The path to the log file. */
     const char* file_path;
-    /**< Mutex to ensure thread-safe logging. */
     pthread_mutex_t thread_lock;
-};
+} logger_t;
 ```
+
+member variables:
+
+- **`log_level`**: The logging level of the logger.
+- **`log_type`**: The type of logger (stream or file).
+- **`log_type_name`**: The name associated with the logger type.
+- **`file_stream`**: The file stream for writing log messages.
+- **`file_path`**: The path to the log file.
+- **`thread_lock`**: Mutex to ensure thread-safe logging.
 
 ### Functions
 
