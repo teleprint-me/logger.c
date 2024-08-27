@@ -75,19 +75,33 @@ The logger can output logs in two different ways:
 The core of the logging system is the `Logger` structure:
 
 ```c
-struct Logger {
-    log_level_t log_level;       /**< The logging level of the logger. */
-    log_type_t  log_type;        /**< The type of logger (stream or file). */
-    const char* log_type_name;   /**< The name associated with the logger type. */
-    FILE* file_stream;           /**< The file stream for writing log messages. */
-    const char* file_path;       /**< The path to the log file. */
-    pthread_mutex_t thread_lock; /**< Mutex to ensure thread-safe logging. */
+logger_t {
+    /**< The logging level of the logger. */
+    log_level_t log_level;
+    /**< The type of logger (stream or file). */
+    log_type_t  log_type;
+    /**< The name associated with the logger type. */
+    const char* log_type_name;
+    /**< The file stream for writing log messages. */
+    FILE* file_stream;
+    /**< The path to the log file. */
+    const char* file_path;
+    /**< Mutex to ensure thread-safe logging. */
+    pthread_mutex_t thread_lock;
 };
 ```
 
 ### Functions
 
-#### `struct Logger* logger_create(log_level_t log_level, log_type_t log_type, const char* file_path)`
+#### logger_create
+
+```c
+logger_t* logger_create(
+  log_level_t log_level,
+  log_type_t log_type,
+  const char* file_path
+)
+```
 
 Creates a new logger instance:
 
@@ -98,7 +112,11 @@ Creates a new logger instance:
 - **Returns**: A pointer to the newly created `Logger` instance, or `NULL` if
   an error occurs.
 
-#### `bool logger_free(struct Logger* logger)`
+#### logger_free
+
+```c
+bool logger_free(logger_t* logger)
+```
 
 Destroys a logger instance and releases associated resources:
 
@@ -107,7 +125,16 @@ Destroys a logger instance and releases associated resources:
 - **Returns**: `true` if the logger was successfully destroyed, `false`
   otherwise.
 
-#### `bool logger_message(struct Logger* logger, log_level_t log_level, const char* format, ...)`
+#### logger_message
+
+```c
+bool logger_message(
+  logger_t* logger,
+  log_level_t log_level,
+  const char* format,
+  ...
+)
+```
 
 Logs a message with the specified log level to the logger's output:
 
@@ -121,7 +148,11 @@ Logs a message with the specified log level to the logger's output:
 - **Returns**: `true` if the message was successfully logged, `false`
   otherwise.
 
-#### `#define LOG(logger, level, format, ...)`
+#### LOG
+
+```c
+#define LOG(logger, level, format, ...)
+```
 
 A macro for logging messages using a logger instance:
 
@@ -140,7 +171,7 @@ Here's a basic example of how to use the logger:
 
 int main(void) {
     const char* file_path = "test.log";
-    struct Logger* file_logger = logger_create(LOG_LEVEL_DEBUG, LOG_TYPE_FILE, file_path);
+    logger_t* file_logger = logger_create(LOG_LEVEL_DEBUG, LOG_TYPE_FILE, file_path);
 
     LOG(file_logger, LOG_LEVEL_DEBUG, "Logging to a file: 1, 2, %d... Done!\n", 3);
 
