@@ -245,7 +245,7 @@ void initialize_global_logger(
  * These macros provide shorthand methods for logging messages at various
  * levels (DEBUG, INFO, WARN, ERROR) using the global logger.
  *
- * @param msg The format string for the log message.
+ * @param format The format string for the log message.
  * @param ... Additional arguments for formatting the message (optional).
  *
  * Example usage:
