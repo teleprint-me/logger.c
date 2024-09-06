@@ -239,4 +239,10 @@ void initialize_global_logger(
     const char* file_path
 );
 
+// @todo These are convenience macros for reducing boilerplate code
+#define LOG_DEBUG(msg, ...) LOG(&global_logger, LOG_LEVEL_DEBUG, msg, ...)
+#define LOG_INFO(msg, ...)  LOG(&global_logger, LOG_LEVEL_INFO, msg, ...)
+#define LOG_WARN(msg, ...)  LOG(&global_logger, LOG_LEVEL_WARN, msg, ...)
+#define LOG_ERROR(msg, ...) LOG(&global_logger, LOG_LEVEL_ERROR, msg, ...)
+
 #endif // LOGGER_H
