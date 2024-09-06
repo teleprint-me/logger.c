@@ -1,7 +1,14 @@
-/*
+/**
  * Copyright © 2024 Austin Berrio
  *
- * src/logger.c
+ * @file src/logger.c
+ *
+ * @brief A simple and lightweight logger written in pure C
+ *
+ * `logger.c` provides a minimal logging library that allows you to log
+ * messages with different severity levels (e.g., DEBUG, INFO, WARN, ERROR) to
+ * various outputs like console or file. It's designed to be lightweight and
+ * easily integrated into existing C projects.
  */
 
 #include "logger.h"
