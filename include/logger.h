@@ -239,10 +239,28 @@ void initialize_global_logger(
     const char* file_path
 );
 
-// @todo These are convenience macros for reducing boilerplate code
-#define LOG_DEBUG(msg, ...) LOG(&global_logger, LOG_LEVEL_DEBUG, msg, ...)
-#define LOG_INFO(msg, ...)  LOG(&global_logger, LOG_LEVEL_INFO, msg, ...)
-#define LOG_WARN(msg, ...)  LOG(&global_logger, LOG_LEVEL_WARN, msg, ...)
-#define LOG_ERROR(msg, ...) LOG(&global_logger, LOG_LEVEL_ERROR, msg, ...)
+/**
+ * @brief Convenience macros for logging with the global logger.
+ *
+ * These macros provide shorthand methods for logging messages at various
+ * levels (DEBUG, INFO, WARN, ERROR) using the global logger.
+ *
+ * @param msg The format string for the log message.
+ * @param ... Additional arguments for formatting the message (optional).
+ *
+ * Example usage:
+ * @code{.cpp}
+ * LOG_DEBUG("Debug message: %s\n", "Hello, world!");
+ * LOG_ERROR("Error: %d occurred in function %s\n", error_code, __func__);
+ * @endcode
+ */
+#define LOG_DEBUG(format, ...) \
+    LOG(&global_logger, LOG_LEVEL_DEBUG, format, ##__VA_ARGS__)
+#define LOG_INFO(format, ...) \
+    LOG(&global_logger, LOG_LEVEL_INFO, format, ##__VA_ARGS__)
+#define LOG_WARN(format, ...) \
+    LOG(&global_logger, LOG_LEVEL_WARN, format, ##__VA_ARGS__)
+#define LOG_ERROR(format, ...) \
+    LOG(&global_logger, LOG_LEVEL_ERROR, format, ##__VA_ARGS__)
 
 #endif // LOGGER_H
