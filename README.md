@@ -21,11 +21,16 @@ git clone https://github.com/teleprint-me/logger.c logger
 
 ### Build with CMake
 
-Use CMake to configure and build the project:
+Configure the project:
 
 ```sh
 cmake -B build -DCMAKE_BUILD_TYPE=Debug
-cmake --build build --config Debug -j 16
+```
+
+Build the configured project:
+
+```sh
+cmake --build build --config Debug -j $(nproc)
 ```
 
 ### Run Tests
@@ -164,17 +169,33 @@ Logs a message with the specified log level to the logger's output:
 
 #### LOG
 
+A macro for logging messages using a logger instance:
+
 ```c
 #define LOG(logger, level, format, ...)
 ```
-
-A macro for logging messages using a logger instance:
 
 - **Parameters**:
   - `logger`: A pointer to the `Logger` instance.
   - `level`: The log level of the message.
   - `format`: The format string of the message, followed by any additional
     arguments.
+  - `...` Additional arguments for formatting the message (optional).
+
+#### LOG_DEBUG, LOG_INFO, LOG_WARN, and LOG_ERROR
+
+Helper macro's to reduce boilerplate code for enhanced user-friendliness:
+
+```c
+#define LOG_DEBUG(format, ...)
+#define LOG_INFO(format, ...)
+#define LOG_WARN(format, ...)
+#define LOG_ERROR(format, ...)
+```
+
+- **Parameters**:
+  - `format` The format string for the log message.
+  - `...` Additional arguments for formatting the message (optional).
 
 ### Example Usage
 
